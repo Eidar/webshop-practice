@@ -1,12 +1,13 @@
 <?php
 session_start();
-if (!session_id) {
-	header ("location: install.php")
+
+if (!session_id()) {
+	header ("location: install.php");
 }
 
-$_POST['host']=$_SESSION['host'];
-$_POST['user']=$_SESSION['user'];
-$_POST['pass']=$_SESSION['pass'];
+$hostname=$_SESSION['host'];
+$username=$_SESSION['user'];
+$password=$_SESSION['pass'];
 
 ?>
 
@@ -17,15 +18,12 @@ $_POST['pass']=$_SESSION['pass'];
 
 <?php
 $db_data = fopen ("db_data.txt", "w");
-$hostname = $_POST['host']; 
-$username = $_POST['user'];
-$password = $_POST['pass'];
-
-if($_POST['host'] != '' || $_POST['host'] != NULL){
+ 
+if($hostname != '' || $hostname != NULL){
 	$db_data = fopen ("db_data.txt", "w");
 	fwrite($db_data, '///host: ' . $hostname . '///User: ' . $username . '///Pass: ' . $password);
 
-	if (isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']))
+	if (isset($hostname) && isset($username) && isset($password))
 	{
 	$mysqlconnect = mysql_connect($hostname, $username, $password) 
 	  or die("Unable to connect to MySQL");
